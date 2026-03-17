@@ -1,0 +1,6 @@
+[theme]
+primaryColor = "#00E5FF" # アクセントカラー（鮮やかなシアン）
+backgroundColor = "#0E1117" # アプリ全体の背景色（深みのある黒）
+secondaryBackgroundColor = "#262730" # サイドバーや設定枠の背景色（少し明るい黒）
+textColor = "#FAFAFA" # 文字色（真っ白ではなく、目に優しいオフホワイト）
+font = "sans serif" # フォントの種類
