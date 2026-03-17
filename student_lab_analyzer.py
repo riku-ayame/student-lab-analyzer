@@ -58,6 +58,18 @@ custom_css = """
     .stButton>button {
         border-radius: 6px !important;
         font-weight: bold !important;
+    
+    /* 5. Streamlitの気配を完全に消す（ステルス化） */
+    #MainMenu {visibility: hidden;} /* 右上のメニューを隠す */
+    footer {visibility: hidden;}    /* 一番下の「Made with Streamlit」を隠す */
+    header {visibility: hidden;}    /* 上部のヘッダー（Deployボタン等）を隠す */
+
+    /* 6. 枠線付きコンテナを「美しいカード」に進化させる（影と丸み） */
+    [data-testid="stVerticalBlockBorderWrapper"] {
+        border-radius: 12px !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important;
+        background-color: var(--secondary-background-color) !important;
+        padding: 0.5rem !important;
     }
 </style>
 """
@@ -90,7 +102,7 @@ if "show_graph" not in st.session_state: st.session_state.show_graph = False
 # ==========================================
 # 📱 3. サイドバー（全体設定）
 # ==========================================
-with st.sidebar:
+with st.sidebar.container(border=True): #border=True でサイドバー全体を枠線付きのコンテナにする
     st.header("⚙️ 全体設定")
     # ✨ 機能追加：AIアシスト機能のON/OFFスイッチ！
     use_ai = st.toggle("🤖 AIアシスト機能を有効にする", value=True)
