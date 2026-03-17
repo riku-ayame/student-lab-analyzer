@@ -25,7 +25,7 @@ os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
 # 🛠️ 1. ページ全体の設定
 # ==========================================
 #Streamlitのルールとして、st.set_page_config(...) は**全コードの中で必ず一番最初（他のst.〇〇よりも上）**に書かなければならない
-st.set_page_config(page_title="学生実験アナライザー", page_icon="IMG_6122.PNG", layout="wide")
+st.set_page_config(page_title="実験データアナライザー", page_icon="IMG_6122.PNG", layout="wide")
 
 # 🎨 UI/UXのプロ化：カスタムCSSの注入
 custom_css = """
@@ -76,7 +76,7 @@ custom_css = """
 # HTMLとして安全にCSSを読み込ませる
 st.markdown(custom_css, unsafe_allow_html=True)
 
-st.title("学生実験アナライザー")
+st.title("実験データアナライザー")
 st.markdown("実験データの結合、クレンジング、誤差棒付きグラフ化、理論値比較、AI解析までを全自動化します。")
 
 # ==========================================
