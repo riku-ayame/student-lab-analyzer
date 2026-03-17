@@ -24,7 +24,46 @@ os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
 # ==========================================
 # 🛠️ 1. ページ全体の設定
 # ==========================================
+#Streamlitのルールとして、st.set_page_config(...) は**全コードの中で必ず一番最初（他のst.〇〇よりも上）**に書かなければならない
 st.set_page_config(page_title="学生実験アナライザー", page_icon="IMG_6122.PNG", layout="wide")
+
+# 🎨 UI/UXのプロ化：カスタムCSSの注入
+custom_css = """
+<style>
+    /* 1. 画面上部の無駄に広い余白（パディング）をギュッと詰める */
+    .block-container {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+    }
+    
+    /* 2. 全体的なフォントサイズをプロ仕様（14px）に縮小して密度を上げる */
+    html, body, [class*="css"] {
+        font-size: 14px !important;
+    }
+
+    /* 3. 見出し（h1, h2, h3）のサイズと余白をスタイリッシュに調整 */
+    h1 {
+        font-size: 1.8rem !important;
+        padding-bottom: 0.5rem !important;
+    }
+    h2 {
+        font-size: 1.4rem !important;
+        padding-bottom: 0.2rem !important;
+    }
+    h3 {
+        font-size: 1.1rem !important;
+    }
+
+    /* 4. ボタンの丸みを少しシャープにし、文字を太字にしてMacアプリ風に */
+    .stButton>button {
+        border-radius: 6px !important;
+        font-weight: bold !important;
+    }
+</style>
+"""
+# HTMLとして安全にCSSを読み込ませる
+st.markdown(custom_css, unsafe_allow_html=True)
+
 st.title("🧪 学生実験アナライザー")
 st.markdown("実験データの結合、クレンジング、誤差棒付きグラフ化、理論値比較、AI解析までを全自動化します。")
 
