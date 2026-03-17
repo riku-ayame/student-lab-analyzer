@@ -329,6 +329,19 @@ with tab1:
             st.session_state.original_working_df = st.session_state.raw_df_a.copy()
 
         if st.session_state.working_df is not None:
+            # ==========================================
+            # 👇 ✨ ここにダッシュボード（Metrics）を追加！
+            # ==========================================
+            st.markdown("##### 📊 現在のデータ概要")
+            with st.container(border=True):
+                m_col1, m_col2, m_col3 = st.columns(3)
+                current_rows = len(st.session_state.working_df)
+                current_cols = len(st.session_state.working_df.columns)
+                
+                m_col1.metric(label="📝 データ行数", value=f"{current_rows} 行")
+                m_col2.metric(label="📌 カラム（列）数", value=f"{current_cols} 列")
+                m_col3.metric(label="💾 ファイル状態", value="編集中", delta="未確定", delta_color="off")
+            # ==========================================
             st.info("💡 左端のチェックボックスを選択し、Deleteキーで行ごと削除（外れ値除外）できます。")
 
             # 👇 ✨ 追加：クレンジングをリセットして初期状態に戻すボタン
