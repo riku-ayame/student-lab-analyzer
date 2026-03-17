@@ -76,7 +76,7 @@ custom_css = """
 # HTMLとして安全にCSSを読み込ませる
 st.markdown(custom_css, unsafe_allow_html=True)
 
-st.title("🧪 学生実験アナライザー")
+st.title("学生実験アナライザー")
 st.markdown("実験データの結合、クレンジング、誤差棒付きグラフ化、理論値比較、AI解析までを全自動化します。")
 
 # ==========================================
@@ -238,7 +238,7 @@ with tab1:
 
     # ▼▼▼ ✨機能追加：Vision OCR (画像からデータ抽出) ▼▼▼
     if use_ai:
-        st.subheader("🖼️ 方法2：画像（スクショ等）からデータを抽出")
+        st.subheader("画像（スクショ等）からデータを抽出")
         st.write("実験データの表が写っている画像をアップロードしてください。AIが表を読み取り、データフレームに変換します。")
         
         file_img = st.file_uploader("表の画像をアップロード", type=["png", "jpg", "jpeg"], key="file_img")
@@ -329,19 +329,6 @@ with tab1:
             st.session_state.original_working_df = st.session_state.raw_df_a.copy()
 
         if st.session_state.working_df is not None:
-            # ==========================================
-            # 👇 ✨ ここにダッシュボード（Metrics）を追加！
-            # ==========================================
-            st.markdown("##### 📊 現在のデータ概要")
-            with st.container(border=True):
-                m_col1, m_col2, m_col3 = st.columns(3)
-                current_rows = len(st.session_state.working_df)
-                current_cols = len(st.session_state.working_df.columns)
-                
-                m_col1.metric(label="📝 データ行数", value=f"{current_rows} 行")
-                m_col2.metric(label="📌 カラム（列）数", value=f"{current_cols} 列")
-                m_col3.metric(label="💾 ファイル状態", value="編集中", delta="未確定", delta_color="off")
-            # ==========================================
             st.info("💡 左端のチェックボックスを選択し、Deleteキーで行ごと削除（外れ値除外）できます。")
 
             # 👇 ✨ 追加：クレンジングをリセットして初期状態に戻すボタン
@@ -604,7 +591,12 @@ with tab2:
                             title_text=graph_title, 
                             xaxis_title=x_title, 
                             yaxis_title=y_title,
-                            template=theme
+                            # 👇 ✨ 追加：Plotlyの背景を強制的に白にする！
+                            template="plotly_white", # 全体をクリーンな白テーマに
+                            paper_bgcolor="white",   # グラフの外側の余白を白に
+                            plot_bgcolor="white",    # グラフの内側を白に
+                            font=dict(color="black"), # 軸の文字色などを黒に統一
+                            # ▲▲▲ 追加 ▲▲▲
                         )
                         if is_log_x: fig.update_xaxes(type="log")
                         if is_log_y: fig.update_yaxes(type="log")
@@ -625,7 +617,8 @@ with tab2:
                             key=f"my_main_chart_{st.session_state.editor_key}", # 👈 これがないと投げ縄を忘れてしまいます！
                             use_container_width=True, 
                             on_select="rerun", # 選択されたら即座に再計算する
-                            selection_mode=["lasso", "box"] # 投げ縄と四角形選択を許可
+                            selection_mode=["lasso", "box"], # 投げ縄と四角形選択を許可
+                            theme=None #Streamlitのダークテーマを無視させる
                         )
                         # 👇 ✨ 追加：もし投げ縄で選択されたデータ（点）があれば、削除UIを出現させる
                         if selection_event and len(selection_event.selection.get("points", [])) > 0:
